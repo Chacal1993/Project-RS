@@ -1,8 +1,8 @@
-export interface Direccion {
+export class Direccion {
     calle: string;
     numero: string;
     puerta: string;
-    codPostal: string;
+    codigoPostal: string;
     ciudad: string;
 
 }

@@ -1,14 +1,17 @@
-import { Direccion } from './direccion';
 import { Aseguradora } from './aseguradora';
+import { Persons } from './persons';
 
-export interface Paciente {
+export enum TipoSeguro {
+    SALUD = 1,
+    FAMILIAR,
+    DENTAL,
+    TRABAJO,
+    ESTUDIANTE,
+    VIAJE
+}
+
+export class Paciente extends Persons {
     NHC: string;
-    nombre: string;
-    primerApellido: string;
-    segundoApellido: string;
-    genero: string;
-    fechaNacimiento: Date;
-    NIF: string;
-    dirección: Direccion;
-    listadoAsegradoras: Aseguradora[];
+    listadoAseguradoras: Aseguradora[];
+    tipoSeguro: TipoSeguro;
 }

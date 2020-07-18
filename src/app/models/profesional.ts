@@ -1,18 +1,12 @@
 import { Direccion } from './direccion';
+import { Persons } from './persons';
 
 enum TipoProfesional {
     MEDICO = 1,
     ENFERMERO,
     ADMINISTRATIVO
 }
-export interface Profesional {
+export class Profesional extends Persons {
     numColegiado: string;
-    nombre: string;
-    primerApellido: string;
-    segundoApellido: string;
-    genero: string;
-    fechaNacimiento: Date;
-    NIF: string;
     tipoProfesional: TipoProfesional;
-    direccion: Direccion;
 }

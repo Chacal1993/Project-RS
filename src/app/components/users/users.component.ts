@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PersonService } from 'src/app/services/person.service';
 
 
 const ELEMENT_DATA: any[] = [
@@ -13,11 +14,16 @@ const ELEMENT_DATA: any[] = [
 })
 export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['NIF', 'nombreCompleto', 'genero', 'fechaNacimiento', 'acciones'];
-  dataSource = ELEMENT_DATA;
+  dataSource: any[];
 
-  constructor() { }
+  constructor(private service: PersonService) {
+    this.dataSource = [];
+  }
 
   ngOnInit(): void {
+    this.service.getPerson().subscribe(persons => {
+      this.dataSource = persons as [];
+    })
   }
 
   mostrar(valor) {

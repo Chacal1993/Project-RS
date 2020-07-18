@@ -5,8 +5,8 @@ enum TipoSeguro {
     VIAJE,
     ESTUDIANTE
 }
-export interface Aseguradora {
+export class Aseguradora {
     numTarjeta: string;
-    nombre: string;
+    nombreAseguradora: string;
     tipoSeguro: TipoSeguro;
 }
