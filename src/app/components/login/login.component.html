@@ -1,0 +1,20 @@
+<div class="login-form">
+    <mat-form-field appearance="outline">
+        <mat-label>Ingrese usuario</mat-label>
+        <input matInput type="text" [(ngModel)]="usuario.nombreUsuario" required>
+        <button mat-button *ngIf="usuario.nombreUsuario" matSuffix mat-icon-button aria-label="Limpiar"
+            (click)="usuario.nombreUsuario=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Ingrese su contraseña</mat-label>
+        <input matInput [type]="ocultarContrasenna ? 'password' : 'text'" [(ngModel)]="usuario.contrasena" required>
+        <button mat-icon-button matSuffix (click)="ocultarContrasenna = !ocultarContrasenna"
+            [attr.aria-label]="'Ocultar contraseña'" [attr.aria-pressed]="ocultarContrasenna">
+            <mat-icon>{{ocultarContrasenna ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)='signIn()'
+        [disabled]="usuario.nombreUsuario == null">Acceder</button>
+</div>

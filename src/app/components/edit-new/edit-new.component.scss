@@ -1,0 +1,40 @@
+.example-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    & section {
+        display: flex;
+        width: 30%;
+        align-items: center;
+        font-size: 1.5em;
+    }
+    & mat-radio-group {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}
+
+.shadow-none {
+    box-shadow: none !important;
+}
+.button-back {
+    display: flex;
+    justify-content: flex-end;
+    padding: 2%;
+}
+@media (max-width: 411px) {
+    section mat-radio-group {
+        display: flex;
+        flex-direction: column;
+        & :nth-child(2) {
+            margin-top: 15%;
+            margin-bottom: 15%;
+        }
+    }
+    #fr-s {
+        display: flex;
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,47 @@
+:host {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.example-table {
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+.alinear-izquierda {
+    display: flex;
+    justify-content: space-between;
+    margin: 2%;
+    & strong {
+        width: 100%;
+        font-size: x-large;
+    }
+    & :nth-child(1) {
+        margin-right: 2%;
+    }
+    & .alinear-button {
+        display: flex;
+    }
+}
+
+@media (max-width: 411px) {
+    .alinear-izquierda {
+        display: flex;
+        flex-direction: column;
+    }
+    .alinear-button {
+        margin-top: 10%;
+    }
+
+    .example-table {
+        width: 550px;
+        overflow: auto;
+    }
+    table {
+        width: 800px;
+    }
+}

@@ -1,1 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.bg-body {
+    background: url(assets/img/home2.jpg) no-repeat repeat;
+    background-size: cover;
+}
+
+@media (max-width: 411px) {
+    .bg-body {
+        background: url(assets/img/home2_mobile.jpeg) no-repeat;
+    }
+    body {
+        width: fit-content;
+    }
+}
+.text-center {
+    text-align: center;
+    font-style: italic !important;
+}
+
+app-detail .mat-form-field-appearance-outline.mat-form-field-disabled .mat-form-field-outline {
+    color: rgba(0, 0, 0, 0.3) !important;
+}
+
+app-detail .mat-input-element:disabled {
+    color: rgba(0, 0, 0, 0.78);
+}
+
+input:-internal-autofill-selected {
+    background-color: transparent !important;
+}
