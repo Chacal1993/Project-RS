@@ -192,22 +192,33 @@ export class EditNewComponent implements OnInit {
 
   insertarAseguradora(formulario) {
     this.aseguradoras.push(formulario);
-    this.dataSource = this.aseguradoras;
+    this.dataSource = [...this.aseguradoras];
     this.thirdFormGroup.reset();
   }
 
-  updatePerson() {
-    this.persona.listadoAseguradoras = this.aseguradoras;
-    this.personService.updateUsuario(this.persona).subscribe(r => {
+
+  updatePerson(formularioDatosPersonales) {
+    if (formularioDatosPersonales.valid) {
+      this.persona.listadoAseguradoras = this.aseguradoras;
+      this.personService.updateUsuario(this.persona).subscribe(r => {
+        Swal.fire({
+          icon: 'success',
+          title: 'El usuario ha sido actualizado correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(r => {
+          this.router.navigate(['users']);
+        });
+      })
+    } else {
       Swal.fire({
-        icon: 'success',
-        title: 'El usuario ha sido actualizado correctamente',
+        icon: 'error',
+        title: 'Hay campos requeridos sin rellenar',
         showConfirmButton: false,
         timer: 1500
-      }).then(r => {
-        this.router.navigate(['users']);
-      });
-    })
+      })
+    }
+
   }
 
   getNameOfEnum(value) {

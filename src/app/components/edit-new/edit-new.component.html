@@ -1,135 +1,153 @@
+<div class="button-back">
+    <button mat-raised-button color="primary" [routerLink]="['/users']">Atrás</button>
+</div>
+
 <mat-vertical-stepper [linear]="!isEdit" #stepper>
     <mat-step [stepControl]="personFormGroup">
         <ng-template matStepLabel>Tipo de Usuario</ng-template>
-        <section class="example-section">
-            <label class="example-margin">Tipo de Usuario: </label>
-            <mat-radio-group [(ngModel)]="tipo" (change)="changeTipoPersona()">
-                <mat-radio-button class="example-margin" value="profesional">Profesional</mat-radio-button>
-                <mat-radio-button class="example-margin" value="paciente"> Paciente</mat-radio-button>
-            </mat-radio-group>
-        </section>
-        <div>
-            <button mat-raised-button matStepperNext>Siguiente</button>
+        <div class="example-section" id="fr-s">
+            <section>
+                <mat-radio-group [(ngModel)]="tipo" (change)="changeTipoPersona()">
+                    <mat-radio-button class="example-margin" value="profesional">Profesional</mat-radio-button>
+                    <mat-radio-button class="example-margin" value="paciente"> Paciente</mat-radio-button>
+                </mat-radio-group>
+            </section>
+            <div>
+                <button mat-raised-button matStepperNext color='primary'>Siguiente</button>
+            </div>
         </div>
+
     </mat-step>
     <mat-step [stepControl]="firstFormGroup">
         <form [formGroup]="firstFormGroup">
             <ng-template matStepLabel>Datos Personales</ng-template>
-
-            <mat-form-field appearance="outline" *ngIf="tipo === 'paciente'">
-                <mat-label>Número de historia clínica</mat-label>
-                <input matInput placeholder="N980889-20" formControlName="NHC" required [(ngModel)]="persona.NHC">
-            </mat-form-field>
-            <mat-form-field appearance="outline" *ngIf="tipo === 'profesional'">
-                <mat-label>Número de colegiado</mat-label>
-                <input matInput placeholder="C-2709" formControlName="numColegiado" required
-                    [(ngModel)]="persona.numColegiado">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Nombre</mat-label>
-                <input matInput placeholder="Juan" formControlName="nombre" required [(ngModel)]="persona.nombre">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Primer apellido</mat-label>
-                <input matInput placeholder="González" formControlName="primerApellido" required
-                    [(ngModel)]="persona.primerApellido">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Segundo Apellido</mat-label>
-                <input matInput placeholder="Rivera" formControlName="segundoApellido"
-                    [(ngModel)]="persona.segundoApellido">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>NIF</mat-label>
-                <input matInput placeholder="8906877P" formControlName="NIF" [(ngModel)]="persona.NIF">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Género</mat-label>
-                <mat-select formControlName="genero">
-                    <mat-option value=1>Masculino</mat-option>
-                    <mat-option value=2>Femenino</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="example-full-width" appearance="outline">
-                <mat-label>Fecha de Nacimiento</mat-label>
-                <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento"
-                    [(ngModel)]="persona.fechaNacimiento">
-                <mat-datepicker-toggle matSuffix [for]="picker">
-                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field appearance="outline" *ngIf="tipo === 'profesional'">
-                <mat-label>Tipo de Profesional</mat-label>
-                <mat-select formControlName="tipoProfesional">
-                    <mat-option value=1>Médico</mat-option>
-                    <mat-option value=2>Enfermero</mat-option>
-                    <mat-option value=3>Administrativo</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div>
-                <button mat-raised-button matStepperNext>Siguiente</button>
+            <div class="example-section">
+                <mat-form-field appearance="outline" *ngIf="tipo === 'paciente'">
+                    <mat-label>Número de historia clínica</mat-label>
+                    <input matInput placeholder="N980889-20" formControlName="NHC" required [(ngModel)]="persona.NHC">
+                </mat-form-field>
+                <mat-form-field appearance="outline" *ngIf="tipo === 'profesional'">
+                    <mat-label>Número de colegiado</mat-label>
+                    <input matInput placeholder="C-2709" formControlName="numColegiado" required
+                        [(ngModel)]="persona.numColegiado">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput placeholder="Juan" formControlName="nombre" required [(ngModel)]="persona.nombre">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Primer apellido</mat-label>
+                    <input matInput placeholder="González" formControlName="primerApellido" required
+                        [(ngModel)]="persona.primerApellido">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Segundo Apellido</mat-label>
+                    <input matInput placeholder="Rivera" formControlName="segundoApellido"
+                        [(ngModel)]="persona.segundoApellido">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>NIF</mat-label>
+                    <input matInput maxlength="9" placeholder="8906877P" formControlName="NIF"
+                        [(ngModel)]="persona.NIF">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Género</mat-label>
+                    <mat-select formControlName="genero">
+                        <mat-option value="Masculino">Masculino</mat-option>
+                        <mat-option value="Femenino">Femenino</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="example-full-width" appearance="outline">
+                    <mat-label>Fecha de Nacimiento</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="fechaNacimiento"
+                        [(ngModel)]="persona.fechaNacimiento">
+                    <mat-datepicker-toggle matSuffix [for]="picker">
+                        <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                    </mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" *ngIf="tipo === 'profesional'">
+                    <mat-label>Tipo de Profesional</mat-label>
+                    <mat-select formControlName="tipoProfesional">
+                        <mat-option value=1>Médico</mat-option>
+                        <mat-option value=2>Enfermero</mat-option>
+                        <mat-option value=3>Administrativo</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div>
+                    <button mat-raised-button matStepperNext color='primary'>Siguiente</button>
+                </div>
             </div>
+
         </form>
     </mat-step>
     <mat-step [stepControl]="secondFormGroup" opcional>
         <form [formGroup]="secondFormGroup">
             <ng-template matStepLabel>Dirección</ng-template>
-            <mat-form-field appearance="outline">
-                <mat-label>Calle</mat-label>
-                <input matInput formControlName="calle" placeholder="Ex. 1 Main St, New York, NY"
-                    [(ngModel)]="persona.direccion.calle">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Número</mat-label>
-                <input matInput formControlName="numero" placeholder="34" [(ngModel)]="persona.direccion.numero">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Puerta</mat-label>
-                <input matInput formControlName="puerta" placeholder="3B" [(ngModel)]="persona.direccion.puerta">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Código Postal</mat-label>
-                <input matInput formControlName="codigoPostal" placeholder="34509"
-                    [(ngModel)]="persona.direccion.codigoPostal">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Ciudad</mat-label>
-                <input matInput formControlName="ciudad" placeholder="New York" [(ngModel)]="persona.direccion.ciudad">
-            </mat-form-field>
-            <div>
-                <button mat-raised-button matStepperPrevious>Anterior</button>
-                <button mat-raised-button matStepperNext>Siguiente</button>
+            <div class="example-section">
+                <mat-form-field appearance="outline">
+                    <mat-label>Calle</mat-label>
+                    <input matInput formControlName="calle" placeholder="Ex. 1 Main St, New York, NY"
+                        [(ngModel)]="persona.direccion.calle">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Número</mat-label>
+                    <input matInput formControlName="numero" type="number" placeholder="34"
+                        [(ngModel)]="persona.direccion.numero">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Puerta</mat-label>
+                    <input matInput formControlName="puerta" placeholder="3B" [(ngModel)]="persona.direccion.puerta">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Código Postal</mat-label>
+                    <input matInput formControlName="codigoPostal" placeholder="34509"
+                        [(ngModel)]="persona.direccion.codigoPostal">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Ciudad</mat-label>
+                    <input matInput formControlName="ciudad" placeholder="New York"
+                        [(ngModel)]="persona.direccion.ciudad">
+                </mat-form-field>
+                <div>
+                    <!-- <button mat-raised-button matStepperPrevious>Anterior</button> -->
+                    <button mat-raised-button matStepperNext color='primary'>Siguiente</button>
+                </div>
             </div>
+
         </form>
     </mat-step>
     <mat-step [stepControl]="thirdFormGroup" *ngIf="tipo === 'paciente'" opcional>
         <form [formGroup]="thirdFormGroup">
             <ng-template matStepLabel>Listado de aseguradoras</ng-template>
-            <mat-form-field appearance="outline">
-                <mat-label>Número de tarjeta</mat-label>
-                <input matInput formControlName="numTarjeta" placeholder="0988763399833">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Nombre</mat-label>
-                <input matInput formControlName="nombreAseguradora" placeholder="Ex. 1 Main St, New York, NY">
-            </mat-form-field>
-            <mat-form-field appearance="outline">
-                <mat-label>Tipo de Seguro</mat-label>
-                <mat-select formControlName="tipoSeguro">
-                    <mat-option value=1>Salud</mat-option>
-                    <mat-option value=2>Familiar</mat-option>
-                    <mat-option value=3>Dental</mat-option>
-                    <mat-option value=4>Viaje</mat-option>
-                    <mat-option value=5>Estudiante</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <div>
-                <button mat-raised-button (click)="insertarAseguradora(thirdFormGroup.value)">Agregar</button>
-                <button mat-raised-button matStepperPrevious>Anterior</button>
-                <button mat-raised-button matStepperNext>Siguiente</button>
+            <div class="example-section">
+                <mat-form-field appearance="outline">
+                    <mat-label>Número de tarjeta</mat-label>
+                    <input matInput formControlName="numTarjeta" placeholder="0988763399833">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Nombre</mat-label>
+                    <input matInput formControlName="nombreAseguradora" placeholder="MAPFRE">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Tipo de Seguro</mat-label>
+                    <mat-select formControlName="tipoSeguro">
+                        <mat-option value=1>Salud</mat-option>
+                        <mat-option value=2>Familiar</mat-option>
+                        <mat-option value=3>Dental</mat-option>
+                        <mat-option value=4>Viaje</mat-option>
+                        <mat-option value=5>Estudiante</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-raised-button (click)="insertarAseguradora(thirdFormGroup.value)" color='primary'>
+                    <mat-icon>add</mat-icon>
+                    Agregar
+                </button>
+                <button mat-raised-button matStepperNext color='primary'>Siguiente</button>
+
             </div>
-            <h3 *ngIf="dataSource.length===0">Este usuario no tienes aseguradoras asociadas</h3>
+
+            <h3 *ngIf="dataSource.length===0">* Este usuario no tienes aseguradoras asociadas</h3>
             <mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource.length>0">
                 <ng-container matColumnDef="numTarjeta">
                     <mat-header-cell *matHeaderCellDef> Número de tarjeta </mat-header-cell>
@@ -149,8 +167,8 @@
                 <ng-container matColumnDef="acciones">
                     <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
                     <mat-cell *matCellDef="let element">
-                        <button mat-fab color="warn" (click)='eliminarAseguradora(element.numTarjeta)'
-                            aria-label="Eliminar aseguradora">
+                        <button class="shadow-none" mat-mini-fab color="warn"
+                            (click)='eliminarAseguradora(element.numTarjeta)' aria-label="Eliminar aseguradora">
                             <mat-icon>delete</mat-icon>
                         </button> </mat-cell>
                 </ng-container>
@@ -166,8 +184,11 @@
     </mat-step>
     <mat-step>
         <ng-template matStepLabel>Confirmar</ng-template>
-        <div>
-            <button mat-flat-button color="primary" (click)="updatePerson()" *ngIf="isEdit">Actualizar</button>
+        <div class="example-section">
+            <p *ngIf='isEdit'>* Al pulsar Actualizar sus datos serán modificados automáticamente</p>
+            <button mat-flat-button color="primary" (click)="updatePerson(firstFormGroup)"
+                *ngIf="isEdit">Actualizar</button>
+            <p *ngIf='!isEdit'>* Al pulsar Guardar sus datos serán almacenados en el sistema</p>
             <button mat-flat-button color="primary" (click)="addPerson(firstFormGroup.value, secondFormGroup.value)"
                 *ngIf="!isEdit">Guardar</button>
         </div>

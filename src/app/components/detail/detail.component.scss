@@ -33,5 +33,10 @@ textarea {
 }
 
 .footer-button {
+    display: flex;
     justify-content: flex-end !important;
+    padding: 1%;
+    & :nth-child(1) {
+        margin-right: 1%;
+    }
 }

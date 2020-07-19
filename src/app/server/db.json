@@ -11,35 +11,143 @@
   ],
   "persons": [
     {
-      "numColegiado": "C-98738932",
-      "nombre": "Carlos",
-      "primerApellido": "Carracedo",
-      "segundoApellido": "García",
-      "NIF": "67638764P",
-      "genero": "1",
-      "fechaNacimiento": "1990-06-11T22:00:00.000Z",
-      "direccion": {
-        "calle": "General Ramírez",
-        "numero": "43",
-        "puerta": "4",
-        "codigoPostal": "28020",
-        "ciudad": "Madrid"
-      },
-      "tipoProfesional": 1,
-      "id": 1
-    },
-    {
-      "NHC": "2323q424",
+      "NHC": "NF43537",
       "nombre": "Jorge",
       "primerApellido": "Perez",
       "segundoApellido": "Roque",
-      "NIF": "eqwr",
-      "genero": "1",
+      "NIF": "O9867869R",
+      "genero": "Masculino",
       "fechaNacimiento": "1993-06-26T22:00:00.000Z",
       "direccion": {},
-      "listadoAseguradoras": [],
+      "listadoAseguradoras": [
+        {
+          "numTarjeta": "876475674367",
+          "nombreAseguradora": "MAPFRE",
+          "tipoSeguro": "2"
+        },
+        {
+          "numTarjeta": "8876797333445",
+          "nombreAseguradora": "ONCAMPUS",
+          "tipoSeguro": "5"
+        }
+      ],
       "tipoSeguro": null,
       "id": 2
+    },
+    {
+      "numColegiado": "C-08923987",
+      "nombre": "Carla Caridad",
+      "primerApellido": "Betancourt",
+      "segundoApellido": "Jiménez",
+      "NIF": "N9878678P",
+      "genero": "Femenino",
+      "fechaNacimiento": "1968-11-19T23:00:00.000Z",
+      "direccion": {
+        "calle": "Jesús María",
+        "numero": "9",
+        "puerta": "C",
+        "codigoPostal": "48098",
+        "ciudad": "Valencia"
+      },
+      "tipoProfesional": 2,
+      "id": 4
+    },
+    {
+      "numColegiado": "N8767867868",
+      "nombre": "Juana",
+      "primerApellido": "Sánchez",
+      "segundoApellido": null,
+      "NIF": "78676787T",
+      "genero": "Femenino",
+      "fechaNacimiento": "2009-10-20T22:00:00.000Z",
+      "direccion": {
+        "calle": "San Juan Bosco",
+        "numero": 5,
+        "puerta": "2B",
+        "codigoPostal": "35098",
+        "ciudad": "Oviedo"
+      },
+      "tipoProfesional": 3,
+      "id": 5
+    },
+    {
+      "NHC": "R698457893454",
+      "nombre": "Juan",
+      "primerApellido": "Pérez",
+      "segundoApellido": "García",
+      "NIF": "23643784T",
+      "genero": "Masculino",
+      "fechaNacimiento": "1969-07-22T23:00:00.000Z",
+      "direccion": {
+        "calle": "Martí",
+        "numero": 12,
+        "puerta": "3",
+        "codigoPostal": "23123",
+        "ciudad": "Castellón"
+      },
+      "listadoAseguradoras": [
+        {
+          "numTarjeta": "234234234234234",
+          "nombreAseguradora": "Adeslas",
+          "tipoSeguro": "4"
+        }
+      ],
+      "tipoSeguro": null,
+      "id": 6
+    },
+    {
+      "numColegiado": "234234245",
+      "nombre": "Pancho",
+      "primerApellido": "Rodriguez",
+      "segundoApellido": "Mesa",
+      "NIF": "31231231R",
+      "genero": "Masculino",
+      "fechaNacimiento": "1973-06-21T23:00:00.000Z",
+      "direccion": {
+        "calle": "Casillas",
+        "numero": 2,
+        "puerta": "C",
+        "codigoPostal": "12133",
+        "ciudad": "Madrid"
+      },
+      "tipoProfesional": 3,
+      "id": 7
+    },
+    {
+      "numColegiado": "M8736247236",
+      "nombre": "María",
+      "primerApellido": "Fernández",
+      "segundoApellido": "Gómez",
+      "NIF": "N9879866T",
+      "genero": "Femenino",
+      "fechaNacimiento": null,
+      "direccion": {
+        "calle": null,
+        "numero": null,
+        "puerta": null,
+        "codigoPostal": null,
+        "ciudad": null
+      },
+      "tipoProfesional": 1,
+      "id": 8
+    },
+    {
+      "numColegiado": "R4334126",
+      "nombre": "Alberto",
+      "primerApellido": "García",
+      "segundoApellido": "Juárez",
+      "NIF": "65376452R",
+      "genero": "Masculino",
+      "fechaNacimiento": "1944-04-11T23:00:00.000Z",
+      "direccion": {
+        "calle": "Julián Besteiro",
+        "numero": 7,
+        "puerta": "C",
+        "codigoPostal": "28654",
+        "ciudad": "Madrid"
+      },
+      "tipoProfesional": 1,
+      "id": 9
     }
   ]
 }

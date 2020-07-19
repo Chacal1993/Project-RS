@@ -3,6 +3,7 @@ import { Usuario } from 'src/app/models/user';
 import { NgModel, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -21,17 +22,33 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.body.className = "mat-typography bg-body";
+  }
+
+  ngOnDestroy() {
+    document.body.className = "mat-typography";
   }
 
   signIn() {
-    console.log(this.usuario);
-
     if (this.usuario.nombreUsuario === this.nombreProfesional && this.usuario.contrasena === this.contrasennaProfesional) {
-      alert('Usuario loggeado con éxito');
-      this.router.navigate(['/users']);
+      Swal.fire({
+        icon: 'success',
+        title: 'Bienvenido al sistema',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(result => {
+        this.router.navigate(['/users']);
+      })
+
 
     } else {
-      alert('Fallo al iniciar sesión');
+      Swal.fire({
+        icon: 'error',
+        title: 'Usuario incorrecto',
+        text: 'Revise sus credenciales de acceso',
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   }
 

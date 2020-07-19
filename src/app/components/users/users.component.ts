@@ -5,20 +5,13 @@ import Swal from 'sweetalert2';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-
-
-const ELEMENT_DATA: any[] = [
-  { NIF: 1, nombreCompleto: 'Hydrogen', genero: 'M', fechaNacimiento: new Date() },
-  { NIF: 2, nombreCompleto: 'Hydrogen', genero: 'M', fechaNacimiento: new Date() },
-];
-
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  displayedColumns: string[] = ['NIF', 'nombreCompleto', 'genero', 'fechaNacimiento', 'acciones'];
+  displayedColumns: string[] = ['tipo', 'NIF', 'nombreCompleto', 'genero', 'fechaNacimiento', 'acciones'];
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -74,15 +67,20 @@ export class UsersComponent implements OnInit {
       if (result.value) {
         this.dataSource.data.map(persona => {
           if (persona.tipoProfesional === TipoProfesional.MEDICO) {
-            this.deletePerson(persona.id);
+            this.service.deleteUsuario(persona.id).subscribe(r => {
+              this.service.getPerson().subscribe(persons => {
+                this.dataSource.data = persons as [];
+              });
+
+              Swal.fire({
+                icon: 'success',
+                title: 'Los médicos se han eliminado de forma satisfactoria!',
+                showConfirmButton: false,
+                timer: 1500
+              })
+            })
           }
         });
-
-        Swal.fire(
-          'Eliminado!',
-          'Los médicos se han eliminado de forma satisfactoria',
-          'success'
-        )
       }
     });
   }

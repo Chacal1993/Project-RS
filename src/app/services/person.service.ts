@@ -13,8 +13,8 @@ export class PersonService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPerson(): Observable<Persons[]> {
-    return this.httpClient.get<Persons[]>(this.SERVER_URL);
+  getPerson(): Observable<any[]> {
+    return this.httpClient.get<any[]>(this.SERVER_URL);
   }
 
   getPersonById(idPersona: number) {
@@ -31,7 +31,6 @@ export class PersonService {
   }
 
   deleteUsuario(idPersona) {
-    console.log(idPersona);
     return this.httpClient.delete(this.SERVER_URL + idPersona);
   }
 }
