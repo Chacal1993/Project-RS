@@ -1,7 +1,7 @@
 import { Direccion } from './direccion';
 import { Persons } from './persons';
 
-enum TipoProfesional {
+export enum TipoProfesional {
     MEDICO = 1,
     ENFERMERO,
     ADMINISTRATIVO

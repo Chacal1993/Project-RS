@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { Profesional } from 'src/app/models/profesional';
-import { Paciente } from 'src/app/models/paciente';
+import { Paciente, TipoSeguro } from 'src/app/models/paciente';
+import { Direccion } from 'src/app/models/direccion';
 import { Aseguradora } from 'src/app/models/aseguradora';
 import { PersonService } from 'src/app/services/person.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -17,6 +19,9 @@ export class EditNewComponent implements OnInit {
   persona: any = {};
   isEdit: boolean;
 
+  displayedColumns: string[] = ['numTarjeta', 'nombreAseguradora', 'tipoSeguro', 'acciones'];
+  dataSource = [];
+
   personFormGroup: FormGroup;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -27,9 +32,10 @@ export class EditNewComponent implements OnInit {
   tipo: 'profesional' | 'paciente' = 'paciente';
   disabled = false;
 
-  constructor(private _formBuilder: FormBuilder, private personService: PersonService, private route: ActivatedRoute) {
+  constructor(private _formBuilder: FormBuilder, private personService: PersonService, private route: ActivatedRoute, private router: Router) {
     this.aseguradoras = [];
     this.isEdit = false;
+    this.persona.direccion = {};
   }
 
   ngOnInit() {
@@ -38,17 +44,33 @@ export class EditNewComponent implements OnInit {
       this.idPersona = parametros['params']['user_id'];
     });
 
+
     /**BUSCAR PERSONA POR ID */
     this.personService.getPersonById(this.idPersona).subscribe(p => {
-      this.persona = p;
-      this.isEdit = true;
-      if (p.numColegiado != null) {
-        this.tipo = 'profesional';
-      } else {
-        this.tipo = 'paciente';
-        this.aseguradoras = this.persona.listadoAseguradoras;
+      if (p != null && !Array.isArray(p)) {
+        this.persona = p;
+        this.isEdit = true;
+        if (p.numColegiado != null) {
+          this.tipo = 'profesional';
+          if (p.tipoProfesional) {
+            this.firstFormGroup.get('tipoProfesional').setValue(p.tipoProfesional.toString());
+          }
+
+        } else {
+          this.tipo = 'paciente';
+          this.aseguradoras = this.persona.listadoAseguradoras;
+          this.dataSource = this.aseguradoras;
+          if (p.tipoSeguro) {
+            this.thirdFormGroup.get('tipoSeguro').setValue(p.tipoSeguro.toString());
+          }
+        }
+        if (p.genero) {
+          this.firstFormGroup.get('genero').setValue(p.genero.toString());
+        }
+
+        this.changeTipoPersona();
       }
-      this.changeTipoPersona();
+
     });
 
     /**VALIDACIONES DE LOS FORMULARIOS */
@@ -58,8 +80,12 @@ export class EditNewComponent implements OnInit {
       NHC: ['', Validators.required],
       numColegiado: [''],
       NIF: [''],
-      segundoApellido: ['']
+      segundoApellido: [''],
+      tipoProfesional: [''],
+      genero: [''],
+      fechaNacimiento: ['']
     });
+
 
     this.secondFormGroup = this._formBuilder.group({
       calle: [''],
@@ -83,11 +109,26 @@ export class EditNewComponent implements OnInit {
       profesional.primerApellido = person.primerApellido;
       profesional.segundoApellido = person.segundoApellido;
       profesional.NIF = person.NIF;
+      profesional.genero = person.genero;
+      profesional.fechaNacimiento = person.fechaNacimiento;
 
-      profesional.direccion = direccion;
+      if (direccion) {
+        profesional.direccion = direccion;
+      } else {
+        profesional.direccion = {} as Direccion;
+      }
+
+      profesional.tipoProfesional = parseInt(person.tipoProfesional, 0);
 
       this.personService.createUsuario(profesional).subscribe((result) => {
-        console.log('profesional creado');
+        Swal.fire({
+          icon: 'success',
+          title: 'El profesional ha sido creado correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(r => {
+          this.router.navigate(['users']);
+        });
       });
     } else {
       const paciente = new Paciente();
@@ -96,11 +137,27 @@ export class EditNewComponent implements OnInit {
       paciente.primerApellido = person.primerApellido;
       paciente.segundoApellido = person.segundoApellido;
       paciente.NIF = person.NIF;
-      paciente.direccion = person.direccion;
+      paciente.genero = person.genero;
+      paciente.fechaNacimiento = person.fechaNacimiento;
+
+      if (direccion) {
+        paciente.direccion = direccion;
+      } else {
+        paciente.direccion = {} as Direccion;
+      }
+
       paciente.listadoAseguradoras = this.aseguradoras;
-      console.log(paciente);
+      paciente.tipoSeguro = parseInt(person.tipoSeguro, 0);
       this.personService.createUsuario(paciente).subscribe((result) => {
-        console.log('paciente creado');
+
+        Swal.fire({
+          icon: 'success',
+          title: 'El paciente ha sido creado correctamente',
+          showConfirmButton: false,
+          timer: 1500
+        }).then(r => {
+          this.router.navigate(['users']);
+        });
       });
     }
   }
@@ -135,10 +192,32 @@ export class EditNewComponent implements OnInit {
 
   insertarAseguradora(formulario) {
     this.aseguradoras.push(formulario);
+    this.dataSource = this.aseguradoras;
     this.thirdFormGroup.reset();
   }
 
   updatePerson() {
-    console.log(this.persona);
+    this.persona.listadoAseguradoras = this.aseguradoras;
+    this.personService.updateUsuario(this.persona).subscribe(r => {
+      Swal.fire({
+        icon: 'success',
+        title: 'El usuario ha sido actualizado correctamente',
+        showConfirmButton: false,
+        timer: 1500
+      }).then(r => {
+        this.router.navigate(['users']);
+      });
+    })
+  }
+
+  getNameOfEnum(value) {
+    return TipoSeguro[value];
+  }
+
+  eliminarAseguradora(numTarjeta) {
+    this.aseguradoras = this.aseguradoras.filter(aseg =>
+      aseg.numTarjeta != numTarjeta
+    );
+    this.dataSource = this.aseguradoras;
   }
 }

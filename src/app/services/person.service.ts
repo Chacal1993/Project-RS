@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Persons } from '../models/persons';
 import { identifierModuleUrl } from '@angular/compiler';
+import { TipoProfesional } from 'src/app/models/profesional';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,12 @@ export class PersonService {
     return this.httpClient.post(this.SERVER_URL, person);
   }
 
-  deleteUsuario() { }
+  updateUsuario(person) {
+    return this.httpClient.put(this.SERVER_URL + person.id, person);
+  }
 
-  deleteDoctors() { }
+  deleteUsuario(idPersona) {
+    console.log(idPersona);
+    return this.httpClient.delete(this.SERVER_URL + idPersona);
+  }
 }

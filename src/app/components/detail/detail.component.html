@@ -1,4 +1,7 @@
 <h2 class="text-center">Detalle de Usuario</h2>
+<div class="footer-button">
+    <button mat-raised-button color="primary" [routerLink]="['/users',usuario.id,'edit']">Editar</button>
+</div>
 
 <mat-tab-group dynamicHeight>
 
@@ -9,57 +12,57 @@
                 <div>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Nombre</mat-label>
-                        <input matInput name="nombre" [(ngModel)]="usuario.nombre">
+                        <input matInput name="nombre" [(ngModel)]="usuario.nombre" disabled>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Primer Apellido</mat-label>
-                        <input matInput name="primerApellido" [(ngModel)]="usuario.primerApellido">
+                        <input matInput name="primerApellido" [(ngModel)]="usuario.primerApellido" disabled>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Segundo Apellido</mat-label>
-                        <input matInput name="segundoApellido" [(ngModel)]="usuario.segundoApellido">
+                        <input matInput name="segundoApellido" [(ngModel)]="usuario.segundoApellido" disabled>
                     </mat-form-field>
                 </div>
                 <div>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>NIF</mat-label>
-                        <input matInput name="NIF" [(ngModel)]="usuario.NIF">
+                        <input matInput name="NIF" [(ngModel)]="usuario.NIF" disabled>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Género</mat-label>
-                        <input matInput name="genero" [(ngModel)]="usuario.genero">
+                        <input matInput name="genero" [(ngModel)]="usuario.genero" disabled>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Fecha de Nacimiento</mat-label>
-                        <input matInput name="fechaNacimiento" [(ngModel)]="usuario.fechaNacimiento">
+                        <input matInput name="fechaNacimiento" value="{{usuario.fechaNacimiento | date: 'dd-MM-yyyy' }}"
+                            disabled>
                     </mat-form-field>
                 </div>
                 <div *ngIf="profesional.numColegiado">
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Nº de Colegiado</mat-label>
-                        <input matInput name="numColegiado" [(ngModel)]="profesional.numColegiado">
+                        <input matInput name="numColegiado" [(ngModel)]="profesional.numColegiado" disabled>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Tipo de profesional</mat-label>
-                        <input matInput name="tipoProfesional" [(ngModel)]="profesional.tipoProfesional">
+                        <input matInput name="tipoProfesional"
+                            value="{{getTipoProfesional(profesional.tipoProfesional)}}" disabled>
                     </mat-form-field>
 
                 </div>
                 <div *ngIf="paciente.NHC">
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>NHC</mat-label>
-                        <input matInput name="NHC" [(ngModel)]="paciente.NHC">
+                        <input matInput name="NHC" [(ngModel)]="paciente.NHC" disabled>
                     </mat-form-field>
                 </div>
 
-                <div class="footer-button">
-                    <button mat-raised-button color="primary">Editar</button>
-                </div>
+
             </form>
 
         </div>
@@ -67,31 +70,33 @@
     <mat-tab label="Dirección">
         <div class="example-large-box mat-elevation-z4">
             <!--direcciones-->
-            <div class="contenedora" *ngIf="usuario.direccion">
+            <h3 *ngIf="(usuario.direccion | json) == '{}'">Este usuario no tiene una dirección asociada</h3>
+            <div class="contenedora" *ngIf="usuario.direccion && (usuario.direccion | json) != '{}'">
                 <div>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Calle</mat-label>
-                        <input matInput name="calle" [(ngModel)]="usuario.direccion.calle">
+                        <input matInput name="calle" [(ngModel)]="usuario.direccion.calle" disabled>
                     </mat-form-field>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Número</mat-label>
-                        <input matInput value="5" [(ngModel)]="usuario.direccion.numero">
+                        <input matInput value="5" [(ngModel)]="usuario.direccion.numero" disabled>
                     </mat-form-field>
                 </div>
                 <div>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Puerta</mat-label>
-                        <input matInput [(ngModel)]="usuario.direccion.puerta">
+                        <input matInput [(ngModel)]="usuario.direccion.puerta" disabled>
                     </mat-form-field>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Código Postal</mat-label>
                         <input matInput maxlength="5" placeholder="Ex. 94105"
-                            [(ngModel)]="usuario.direccion.codigoPostal">
-                        <mat-hint align="end">{{usuario.direccion.codigoPostal.length}} / 5</mat-hint>
+                            [(ngModel)]="usuario.direccion.codigoPostal" disabled>
+                        <mat-hint align="end" *ngIf="usuario.direccion.codigoPostal">
+                            {{usuario.direccion.codigoPostal.length}} / 5</mat-hint>
                     </mat-form-field>
                     <mat-form-field class="example-full-width" appearance="outline">
                         <mat-label>Ciudad</mat-label>
-                        <input matInput [(ngModel)]="usuario.direccion.ciudad">
+                        <input matInput [(ngModel)]="usuario.direccion.ciudad" disabled>
                     </mat-form-field>
                 </div>
             </div>
@@ -102,14 +107,15 @@
 
         <div class="example-large-box mat-elevation-z4">
             <div class="container-aseguradora">
-                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <h3 *ngIf="dataSource.length === 0">Este usuario no tiene aseguradoras asociadas.</h3>
+                <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" *ngIf="dataSource.length > 0">
                     <ng-container matColumnDef="numTarjeta">
                         <th mat-header-cell *matHeaderCellDef> Número de la tarjeta </th>
                         <td mat-cell *matCellDef="let element"> {{element.numTarjeta}} </td>
                     </ng-container>
                     <ng-container matColumnDef="nombre">
                         <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                        <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+                        <td mat-cell *matCellDef="let element"> {{element.nombreAseguradora}} </td>
                     </ng-container>
                     <ng-container matColumnDef="tipoSeguro">
                         <th mat-header-cell *matHeaderCellDef> Tipo de seguro </th>

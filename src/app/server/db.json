@@ -11,104 +11,35 @@
   ],
   "persons": [
     {
-      "numColegiado": "2345",
-      "nombre": "Alberto",
-      "primerApellido": "Gonzalez",
-      "segundoApellido": "Gonzalez",
-      "genero": "M",
-      "fechaNacimiento": "2017-11-04T22:39:48.055Z",
-      "NIF": "Y4244352P",
-      "tipoProfesional": 1,
+      "numColegiado": "C-98738932",
+      "nombre": "Carlos",
+      "primerApellido": "Carracedo",
+      "segundoApellido": "García",
+      "NIF": "67638764P",
+      "genero": "1",
+      "fechaNacimiento": "1990-06-11T22:00:00.000Z",
       "direccion": {
-        "calle": "Lalo",
-        "numero": "23",
-        "puerta": "3",
-        "codigoPostal": "23456",
-        "ciudad": "Madrid"
-      }
-    },
-    {
-      "numColegiado": "2345",
-      "nombre": "Alberto",
-      "primerApellido": "Gonzalez",
-      "segundoApellido": "Gonzalez",
-      "genero": "M",
-      "fechaNacimiento": "2017-11-04T22:39:48.055Z",
-      "NIF": "Y4244352P",
-      "tipoProfesional": 1,
-      "direccion": {
-        "calle": "Lalo",
-        "numero": "23",
-        "puerta": "3",
-        "codigoPostal": "23456",
+        "calle": "General Ramírez",
+        "numero": "43",
+        "puerta": "4",
+        "codigoPostal": "28020",
         "ciudad": "Madrid"
       },
+      "tipoProfesional": 1,
+      "id": 1
+    },
+    {
+      "NHC": "2323q424",
+      "nombre": "Jorge",
+      "primerApellido": "Perez",
+      "segundoApellido": "Roque",
+      "NIF": "eqwr",
+      "genero": "1",
+      "fechaNacimiento": "1993-06-26T22:00:00.000Z",
+      "direccion": {},
+      "listadoAseguradoras": [],
+      "tipoSeguro": null,
       "id": 2
-    },
-    {
-      "numColegiado": "xzc",
-      "nombre": "asd",
-      "primerApellido": "asd",
-      "segundoApellido": "asd",
-      "NIF": "ds",
-      "direccion": {
-        "calle": "dsa",
-        "numero": "asd",
-        "puerta": "as",
-        "codigoPostal": "da",
-        "ciudad": "asd"
-      },
-      "id": 3
-    },
-    {
-      "NHC": "dasd",
-      "nombre": "asdas",
-      "primerApellido": "dasd",
-      "segundoApellido": null,
-      "NIF": null,
-      "listadoAseguradoras": [
-        {
-          "numTarjeta": "das",
-          "nombreAseguradora": "das",
-          "tipoSeguro": "das"
-        }
-      ],
-      "id": 4
-    },
-    {
-      "NHC": "asdas",
-      "nombre": "ads",
-      "primerApellido": "dasd",
-      "segundoApellido": "asd",
-      "NIF": "dasd",
-      "listadoAseguradoras": [
-        {
-          "numTarjeta": "dasd",
-          "nombreAseguradora": "das",
-          "tipoSeguro": "dsds"
-        },
-        {
-          "numTarjeta": "sdd",
-          "nombreAseguradora": "dsd",
-          "tipoSeguro": "sddsd"
-        }
-      ],
-      "id": 5
-    },
-    {
-      "NHC": "asas",
-      "nombre": "Alberto",
-      "primerApellido": "Gonzalez",
-      "segundoApellido": "Gonzalez",
-      "NIF": "Y4244352P",
-      "listadoAseguradoras": [
-        {
-          "numTarjeta": "asd",
-          "nombreAseguradora": "asd",
-          "tipoSeguro": "asd"
-        }
-      ],
-      "id": 6
     }
   ]
 }

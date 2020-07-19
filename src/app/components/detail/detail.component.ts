@@ -3,7 +3,7 @@ import { Router, Routes, ActivatedRoute } from '@angular/router';
 import { Usuario } from 'src/app/models/user';
 import { PersonService } from 'src/app/services/person.service';
 import { Persons } from 'src/app/models/persons';
-import { Profesional } from 'src/app/models/profesional';
+import { Profesional, TipoProfesional } from 'src/app/models/profesional';
 import { Paciente, TipoSeguro } from 'src/app/models/paciente';
 
 @Component({
@@ -45,6 +45,10 @@ export class DetailComponent implements OnInit {
 
   getNameOfEnum(value) {
     return TipoSeguro[value];
+  }
+
+  getTipoProfesional(value) {
+    return TipoProfesional[value];
   }
 
 }

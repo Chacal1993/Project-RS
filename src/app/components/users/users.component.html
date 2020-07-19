@@ -3,6 +3,11 @@
         <mat-icon>add</mat-icon>
     </button>
 </div>
+<div class="alinear-izquierda">
+    <button mat-fab color="warn" (click)='deleteProfesionalMedico()'>
+        <mat-icon>delete</mat-icon>
+    </button>
+</div>
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="NIF">
@@ -38,7 +43,7 @@
                 <mat-icon>edit</mat-icon>
             </button>
 
-            <button mat-raised-button color="warn" [routerLink]="['/users', element.id]">
+            <button mat-raised-button color="warn" (click)='deletePerson(element.id)'>
                 <mat-icon>delete</mat-icon>
             </button>
 
@@ -48,3 +53,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 </table>
+<mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
