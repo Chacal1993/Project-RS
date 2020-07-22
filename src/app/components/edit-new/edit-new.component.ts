@@ -7,6 +7,7 @@ import { Aseguradora } from 'src/app/models/aseguradora';
 import { PersonService } from 'src/app/services/person.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Persons } from 'src/app/models/persons';
 
 
 @Component({
@@ -16,7 +17,9 @@ import Swal from 'sweetalert2';
 })
 export class EditNewComponent implements OnInit {
   idPersona: number;
-  persona: any = {};
+  persona: Persons;
+  tempPaciente: Paciente;
+  tempProfesional: Profesional;
   isEdit: boolean;
 
   displayedColumns: string[] = ['numTarjeta', 'nombreAseguradora', 'tipoSeguro', 'acciones'];
@@ -33,9 +36,12 @@ export class EditNewComponent implements OnInit {
   disabled = false;
 
   constructor(private _formBuilder: FormBuilder, private personService: PersonService, private route: ActivatedRoute, private router: Router) {
+    this.persona = new Persons();
+    this.tempPaciente = new Paciente();
+    this.tempProfesional = new Profesional();
     this.aseguradoras = [];
     this.isEdit = false;
-    this.persona.direccion = {};
+    this.persona.direccion = { calle: '', puerta: '', numero: '', codigoPostal: '', ciudad: '' };
   }
 
   ngOnInit() {
@@ -50,18 +56,21 @@ export class EditNewComponent implements OnInit {
       if (p != null && !Array.isArray(p)) {
         this.persona = p;
         this.isEdit = true;
-        if (p.numColegiado != null) {
+
+        if ((p as Profesional).numColegiado != null) {
+          this.tempProfesional = (p as Profesional);
           this.tipo = 'profesional';
-          if (p.tipoProfesional) {
-            this.firstFormGroup.get('tipoProfesional').setValue(p.tipoProfesional.toString());
+          if ((p as Profesional).tipoProfesional) {
+            this.firstFormGroup.get('tipoProfesional').setValue((p as Profesional).tipoProfesional.toString());
           }
 
         } else {
           this.tipo = 'paciente';
-          this.aseguradoras = this.persona.listadoAseguradoras;
+          this.aseguradoras = (p as Paciente).listadoAseguradoras;
+          this.tempPaciente = (p as Paciente);
           this.dataSource = this.aseguradoras;
-          if (p.tipoSeguro) {
-            this.thirdFormGroup.get('tipoSeguro').setValue(p.tipoSeguro.toString());
+          if ((p as Paciente).tipoSeguro) {
+            this.thirdFormGroup.get('tipoSeguro').setValue((p as Paciente).tipoSeguro.toString());
           }
         }
         if (p.genero) {
@@ -104,7 +113,8 @@ export class EditNewComponent implements OnInit {
   addPerson(person, direccion) {
     if (this.tipo === 'profesional') {
       const profesional = new Profesional();
-      profesional.numColegiado = person.numColegiado;
+      profesional.numColegiado = this.tempProfesional.numColegiado;
+
       profesional.nombre = person.nombre;
       profesional.primerApellido = person.primerApellido;
       profesional.segundoApellido = person.segundoApellido;
@@ -132,7 +142,7 @@ export class EditNewComponent implements OnInit {
       });
     } else {
       const paciente = new Paciente();
-      paciente.NHC = person.NHC;
+      paciente.NHC = this.tempPaciente.NHC;
       paciente.nombre = person.nombre;
       paciente.primerApellido = person.primerApellido;
       paciente.segundoApellido = person.segundoApellido;
@@ -199,7 +209,20 @@ export class EditNewComponent implements OnInit {
 
   updatePerson(formularioDatosPersonales) {
     if (formularioDatosPersonales.valid) {
-      this.persona.listadoAseguradoras = this.aseguradoras;
+      if (this.tipo === 'profesional') {
+        (this.persona as Profesional).tipoProfesional = parseInt(formularioDatosPersonales.value.tipoProfesional, 0);
+        (this.persona as Profesional).numColegiado = this.tempProfesional.numColegiado;
+
+        delete this.persona['listadoAseguradoras'];
+        delete this.persona['NHC'];
+      } else {
+        (this.persona as Paciente).listadoAseguradoras = this.aseguradoras;
+        (this.persona as Paciente).NHC = this.tempPaciente.NHC;
+
+        delete this.persona['tipoProfesional'];
+        delete this.persona['numColegiado'];
+      }
+
       this.personService.updateUsuario(this.persona).subscribe(r => {
         Swal.fire({
           icon: 'success',

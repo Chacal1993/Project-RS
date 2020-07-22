@@ -31,7 +31,7 @@ export class DetailComponent implements OnInit {
     });
 
     this.service.getPersonById(this.idUsuario).subscribe(persona => {
-      if (persona.numColegiado != null) {
+      if ((persona as Profesional).numColegiado != null) {
         this.usuario = persona;
         this.profesional = persona as Profesional;
       } else {

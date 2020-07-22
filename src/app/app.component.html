@@ -1,6 +1,22 @@
 <p>
     <mat-toolbar>
-        <span>Rivera<code>H</code>ospital</span>
+        <div>
+            <a [routerLink]="['/users']">
+                <span>Rivera<code>H</code>ospital</span>
+            </a>
+        </div>
+        <div>
+            <button id="button-logout" mat-icon-button [matMenuTriggerFor]="menu"
+                aria-label="Example icon-button with a menu">
+                <mat-icon>account_box</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item [routerLink]="['/login']">
+                    <span>Cerrar sesión</span>
+                </button>
+            </mat-menu>
+        </div>
     </mat-toolbar>
 </p>
+
 <router-outlet></router-outlet>

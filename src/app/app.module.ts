@@ -27,6 +27,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { MatNativeDateModule } from '@angular/material/core';
     MatSelectModule,
     MatPaginatorModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

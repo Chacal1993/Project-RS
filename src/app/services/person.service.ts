@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Persons } from '../models/persons';
 import { identifierModuleUrl } from '@angular/compiler';
-import { TipoProfesional } from 'src/app/models/profesional';
+import { TipoProfesional, Profesional } from 'src/app/models/profesional';
+import { Paciente } from '../models/paciente';
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +14,12 @@ export class PersonService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getPerson(): Observable<any[]> {
-    return this.httpClient.get<any[]>(this.SERVER_URL);
+  getPerson(): Observable<Persons[]> {
+    return this.httpClient.get<Persons[]>(this.SERVER_URL);
   }
 
   getPersonById(idPersona: number) {
-    return this.httpClient.get<any>(this.SERVER_URL + idPersona.toString());
+    return this.httpClient.get<Persons>(this.SERVER_URL + idPersona.toString());
   }
 
   createUsuario(person) {

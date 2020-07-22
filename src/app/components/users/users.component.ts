@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PersonService } from 'src/app/services/person.service';
-import { TipoProfesional } from 'src/app/models/profesional';
+import { TipoProfesional, Profesional } from 'src/app/models/profesional';
 import Swal from 'sweetalert2';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Persons } from 'src/app/models/persons';
 
 @Component({
   selector: 'app-users',
@@ -12,7 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['tipo', 'NIF', 'nombreCompleto', 'genero', 'fechaNacimiento', 'acciones'];
-  dataSource = new MatTableDataSource<any>([]);
+  dataSource = new MatTableDataSource<Persons>([]);
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
@@ -21,7 +22,7 @@ export class UsersComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.getPerson().subscribe(persons => {
-      this.dataSource.data = persons as [];
+      this.dataSource.data = persons;
       this.dataSource.paginator = this.paginator;
       this.dataSource.paginator._intl.itemsPerPageLabel = "Elementos por página";
     })
@@ -39,7 +40,7 @@ export class UsersComponent implements OnInit {
       if (result.value) {
         this.service.deleteUsuario(id).subscribe(r => {
           this.service.getPerson().subscribe(persons => {
-            this.dataSource.data = persons as [];
+            this.dataSource.data = persons;
           });
         });
         Swal.fire({
@@ -66,10 +67,11 @@ export class UsersComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.dataSource.data.map(persona => {
-          if (persona.tipoProfesional === TipoProfesional.MEDICO) {
+          const p = persona as Profesional;
+          if (p.tipoProfesional === TipoProfesional.MEDICO) {
             this.service.deleteUsuario(persona.id).subscribe(r => {
               this.service.getPerson().subscribe(persons => {
-                this.dataSource.data = persons as [];
+                this.dataSource.data = persons;
               });
 
               Swal.fire({

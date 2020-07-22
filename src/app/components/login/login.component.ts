@@ -23,10 +23,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     document.body.className = "mat-typography bg-body";
+    document.getElementById('button-logout').style.display = 'none';
   }
 
   ngOnDestroy() {
     document.body.className = "mat-typography";
+    document.getElementById('button-logout').style.display = 'block';
   }
 
   signIn() {

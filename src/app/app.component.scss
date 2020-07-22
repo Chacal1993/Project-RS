@@ -1,5 +1,16 @@
+:host {
+    & mat-toolbar {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+}
+
 code {
     color: blue;
     font-weight: bolder;
     font-size: 1.3em;
+}
+a:-webkit-any-link {
+    text-decoration: none !important;
 }

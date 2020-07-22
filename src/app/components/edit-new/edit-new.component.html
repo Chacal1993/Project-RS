@@ -24,12 +24,13 @@
             <div class="example-section">
                 <mat-form-field appearance="outline" *ngIf="tipo === 'paciente'">
                     <mat-label>Número de historia clínica</mat-label>
-                    <input matInput placeholder="N980889-20" formControlName="NHC" required [(ngModel)]="persona.NHC">
+                    <input matInput placeholder="N980889-20" formControlName="NHC" required
+                        [(ngModel)]="tempPaciente.NHC">
                 </mat-form-field>
                 <mat-form-field appearance="outline" *ngIf="tipo === 'profesional'">
                     <mat-label>Número de colegiado</mat-label>
                     <input matInput placeholder="C-2709" formControlName="numColegiado" required
-                        [(ngModel)]="persona.numColegiado">
+                        [(ngModel)]="tempProfesional.numColegiado">
                 </mat-form-field>
                 <mat-form-field appearance="outline">
                     <mat-label>Nombre</mat-label>
