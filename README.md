@@ -17,3 +17,7 @@ json-server --watch db.json
 # Credenciales de acceso
 Usuario: profesional
 Contraseña: 123
+
+# Pasos para levantar el proyecto
+1. Ejecutar el comando ng serve para levatantar la app por el puerto 4200
+2. Ejecutar el comando json-server --watch server/db.json (opcionalmente se recomienda abrir otro terminal para en uno tener levantada la app y en otro el json.server con los datos.
