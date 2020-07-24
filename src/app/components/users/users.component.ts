@@ -5,6 +5,8 @@ import Swal from 'sweetalert2';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Persons } from 'src/app/models/persons';
+import { Paciente } from 'src/app/models/paciente';
+import { merge } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -13,22 +15,42 @@ import { Persons } from 'src/app/models/persons';
 })
 export class UsersComponent implements OnInit {
   displayedColumns: string[] = ['tipo', 'NIF', 'nombreCompleto', 'genero', 'fechaNacimiento', 'acciones'];
-  dataSource = new MatTableDataSource<Persons>([]);
+  dataSource = new MatTableDataSource<Paciente | Profesional>([]);
 
+  personas: Array<Paciente | Profesional>;
+  pacientes: Paciente[];
+  profesionales: Profesional[];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private service: PersonService) {
+    this.pacientes = [];
+    this.profesionales = [];
+    this.personas = new Array();
   }
 
   ngOnInit(): void {
-    this.service.getPerson().subscribe(persons => {
-      this.dataSource.data = persons;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.paginator._intl.itemsPerPageLabel = "Elementos por página";
-    })
+    this.actualizarDatosTabla();
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator._intl.itemsPerPageLabel = "Elementos por página";
   }
 
-  deletePerson(id) {
+  actualizarDatosTabla() {
+    this.pacientes = [];
+    this.profesionales = [];
+    this.personas = [];
+    this.service.getPacientes().subscribe(r => {
+      this.pacientes = r['personas'] as Paciente[];
+
+      this.service.getProfesionales().subscribe(r => {
+        this.profesionales = r['profs'] as Profesional[];
+
+        this.dataSource.data = this.personas.concat(this.profesionales, this.pacientes);
+
+      });
+    });
+  }
+
+  deletePerson(persona) {
     Swal.fire({
       title: '¿Estás seguro que deseas borrar este usuario?',
       icon: 'warning',
@@ -38,24 +60,34 @@ export class UsersComponent implements OnInit {
       confirmButtonText: 'Sí, eliminar'
     }).then((result) => {
       if (result.value) {
-        this.service.deleteUsuario(id).subscribe(r => {
-          this.service.getPerson().subscribe(persons => {
-            this.dataSource.data = persons;
+        if ((persona as Profesional).numColegiado != null) {
+          //eliminar un profesional
+          this.service.deleteProfesional(persona._id).subscribe(r => {
+            this.actualizarDatosTabla();
+            Swal.fire({
+              icon: 'success',
+              title: 'Eliminado!',
+              showConfirmButton: false,
+              timer: 1500
+            });
           });
-        });
-        Swal.fire({
-          icon: 'success',
-          title: 'Eliminado!',
-          showConfirmButton: false,
-          timer: 1500
-        })
+        } else {
+          //eliminar un paciente
+          this.service.deletePaciente(persona._id).subscribe(r => {
+            this.actualizarDatosTabla();
+            Swal.fire({
+              icon: 'success',
+              title: 'Eliminado!',
+              showConfirmButton: false,
+              timer: 1500
+            });
+          });
+        }
       }
-    })
-
+    });
   }
 
   deleteProfesionalMedico() {
-
     Swal.fire({
       title: '¿Estás seguro que deseas eliminar todos los médicos?',
       text: "Si elimina todos los médicos no podrá recuperar la información",
@@ -69,18 +101,15 @@ export class UsersComponent implements OnInit {
         this.dataSource.data.map(persona => {
           const p = persona as Profesional;
           if (p.tipoProfesional === TipoProfesional.MEDICO) {
-            this.service.deleteUsuario(persona.id).subscribe(r => {
-              this.service.getPerson().subscribe(persons => {
-                this.dataSource.data = persons;
-              });
-
+            this.service.deleteMedicos().subscribe(r => {
+              this.actualizarDatosTabla();
               Swal.fire({
                 icon: 'success',
                 title: 'Los médicos se han eliminado de forma satisfactoria!',
                 showConfirmButton: false,
                 timer: 1500
-              })
-            })
+              });
+            });
           }
         });
       }

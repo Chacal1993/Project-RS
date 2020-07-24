@@ -1,7 +1,7 @@
 import { Direccion } from './direccion';
 
 export class Persons {
-    id: number;
+    _id: string;
     nombre: string;
     primerApellido: string;
     segundoApellido: string;

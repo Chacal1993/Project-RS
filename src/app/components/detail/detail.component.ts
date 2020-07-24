@@ -15,14 +15,14 @@ export class DetailComponent implements OnInit {
   displayedColumns: string[] = ['numTarjeta', 'nombre', 'tipoSeguro'];
   dataSource = [];
 
-  usuario: Persons;
+  person: Persons;
   paciente: Paciente = new Paciente();
   profesional: Profesional = new Profesional();
 
-  private idUsuario: number;
+  private idUsuario: string;
 
   constructor(private route: ActivatedRoute, private service: PersonService) {
-    this.usuario = new Persons();
+    this.person = new Persons();
   }
 
   ngOnInit(): void {
@@ -30,15 +30,18 @@ export class DetailComponent implements OnInit {
       this.idUsuario = parametros['params']['user_id'];
     });
 
-    this.service.getPersonById(this.idUsuario).subscribe(persona => {
-      if ((persona as Profesional).numColegiado != null) {
-        this.usuario = persona;
-        this.profesional = persona as Profesional;
+    this.service.getProfesionalById(this.idUsuario).subscribe(prof => {
+      if (prof === null) {
+        this.service.getPacienteById(this.idUsuario).subscribe(pac => {
+          if (pac !== null) {
+            this.person = pac as Persons;
+            this.paciente = pac;
+            this.dataSource = this.paciente.listadoAseguradoras;
+          }
+        })
       } else {
-        this.usuario = persona;
-        this.paciente = persona as Paciente;
-
-        this.dataSource = this.paciente.listadoAseguradoras;
+        this.person = prof as Persons;
+        this.profesional = prof;
       }
     });
   }
