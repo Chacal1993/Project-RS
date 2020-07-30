@@ -9,9 +9,9 @@ import { Profesional } from '../models/profesional';
   providedIn: 'root'
 })
 export class PersonService {
-  SERVER_URL_PACIENTE = 'http://localhost:3000/paciente/';
-  SERVER_URL_PROFESIONAL = 'http://localhost:3000/profesional/';
-  SERVER_URL_USUARIO = 'http://localhost:3000/auth/';
+  SERVER_URL_PACIENTE = 'https://project-rs-back.herokuapp.com/paciente/';
+  SERVER_URL_PROFESIONAL = 'https://project-rs-back.herokuapp.com/profesional/';
+  SERVER_URL_USUARIO = 'https://project-rs-back.herokuapp.com/auth/';
 
   constructor(private httpClient: HttpClient) { }
 
