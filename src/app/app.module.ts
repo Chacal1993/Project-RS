@@ -28,6 +28,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
+import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+
 
 
 @NgModule({
@@ -37,6 +39,7 @@ import { MatMenuModule } from '@angular/material/menu';
     UsersComponent,
     DetailComponent,
     EditNewComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule,

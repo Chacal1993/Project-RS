@@ -1,20 +1,21 @@
-<div class="login-form">
+<div class="login-form" [formGroup]="loginFormGroup">
     <mat-form-field appearance="outline">
         <mat-label>Ingrese usuario</mat-label>
-        <input matInput type="text" [(ngModel)]="usuario.nombreUsuario" required>
-        <button mat-button *ngIf="usuario.nombreUsuario" matSuffix mat-icon-button aria-label="Limpiar"
-            (click)="usuario.nombreUsuario=''">
+        <input matInput type="text" [(ngModel)]="usuario.email" formControlName="email" placeholder="example@mail.com"
+            required>
+        <button mat-button *ngIf="usuario.email" matSuffix mat-icon-button aria-label="Limpiar"
+            (click)="usuario.email=''">
             <mat-icon>close</mat-icon>
         </button>
     </mat-form-field>
     <mat-form-field appearance="outline">
         <mat-label>Ingrese su contraseña</mat-label>
-        <input matInput [type]="ocultarContrasenna ? 'password' : 'text'" [(ngModel)]="usuario.contrasena" required>
+        <input matInput [type]="ocultarContrasenna ? 'password' : 'text'" [(ngModel)]="usuario.password"
+            formControlName="password" placeholder="***********" required>
         <button mat-icon-button matSuffix (click)="ocultarContrasenna = !ocultarContrasenna"
             [attr.aria-label]="'Ocultar contraseña'" [attr.aria-pressed]="ocultarContrasenna">
             <mat-icon>{{ocultarContrasenna ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
     </mat-form-field>
-    <button mat-raised-button color="primary" (click)='signIn()'
-        [disabled]="usuario.nombreUsuario == null">Acceder</button>
+    <button mat-raised-button color="primary" (click)='signIn()' [disabled]="!loginFormGroup.valid">Acceder</button>
 </div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, merge } from 'rxjs';
-import { Persons } from '../models/persons';
+import { Usuario } from '../models/user';
 import { Paciente } from '../models/paciente';
 import { Profesional } from '../models/profesional';
 
@@ -9,9 +9,9 @@ import { Profesional } from '../models/profesional';
   providedIn: 'root'
 })
 export class PersonService {
-  SERVER_URL = 'http://localhost:5000/persons/';
   SERVER_URL_PACIENTE = 'http://localhost:3000/paciente/';
   SERVER_URL_PROFESIONAL = 'http://localhost:3000/profesional/';
+  SERVER_URL_USUARIO = 'http://localhost:3000/auth/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -43,7 +43,7 @@ export class PersonService {
     return this.httpClient.put<Profesional>(this.SERVER_URL_PROFESIONAL + 'update?id=' + idProf, profesional);
   }
 
-  updatePaciente(idPac: string, paciente: Paciente): Observable<Paciente> {
+  updatePaciente(idPac: string, paciente: Paciente) {
     return this.httpClient.put<Paciente>(this.SERVER_URL_PACIENTE + 'update?id=' + idPac, paciente);
   }
 
@@ -59,11 +59,8 @@ export class PersonService {
     return this.httpClient.delete(this.SERVER_URL_PROFESIONAL + 'delete/medicos');
   }
 
-  createUsuario(person) {
-    return this.httpClient.post(this.SERVER_URL, person);
-  }
 
-  updateUsuario(person) {
-    return this.httpClient.put(this.SERVER_URL + person.id, person);
+  getUserByEmail(user: Usuario): Observable<Usuario> {
+    return this.httpClient.post<Usuario>(this.SERVER_URL_USUARIO, user);
   }
 }

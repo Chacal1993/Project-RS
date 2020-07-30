@@ -1,8 +1,10 @@
 <p>
     <mat-toolbar>
+
         <div>
             <a [routerLink]="['/users']">
-                <span>Rivera<code>H</code>ospital</span>
+                <img src="../assets/img/logo.png" alt="">
+                <!-- <span>Rivera<code>H</code>ospital</span> -->
             </a>
         </div>
         <div>
@@ -11,7 +13,7 @@
                 <mat-icon>account_box</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item [routerLink]="['/login']">
+                <button mat-menu-item (click)="logout()">
                     <span>Cerrar sesión</span>
                 </button>
             </mat-menu>

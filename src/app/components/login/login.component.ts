@@ -4,6 +4,8 @@ import { NgModel, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { PersonService } from 'src/app/services/person.service';
+
 
 @Component({
   selector: 'app-login',
@@ -11,19 +13,24 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  nombreProfesional = 'profesional';
-  contrasennaProfesional = '123';
-
   ocultarContrasenna = true;
   usuario: Usuario;
 
-  constructor(private router: Router) {
+  loginFormGroup: FormGroup;
+
+  constructor(private router: Router, private serviceUser: PersonService, private formBuilder: FormBuilder) {
     this.usuario = {} as Usuario;
   }
 
   ngOnInit(): void {
     document.body.className = "mat-typography bg-body";
     document.getElementById('button-logout').style.display = 'none';
+
+    /**VALIDACIONES DE LOS FORMULARIOS */
+    this.loginFormGroup = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+    });
   }
 
   ngOnDestroy() {
@@ -32,26 +39,30 @@ export class LoginComponent implements OnInit {
   }
 
   signIn() {
-    if (this.usuario.nombreUsuario === this.nombreProfesional && this.usuario.contrasena === this.contrasennaProfesional) {
+    this.serviceUser.getUserByEmail(this.usuario).subscribe(result => {
       Swal.fire({
         icon: 'success',
         title: 'Bienvenido al sistema',
         showConfirmButton: false,
-        timer: 1500
-      }).then(result => {
-        this.router.navigate(['/users']);
-      })
+        timer: 3500
+      });
 
 
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Usuario incorrecto',
-        text: 'Revise sus credenciales de acceso',
-        showConfirmButton: false,
-        timer: 1500
-      })
-    }
+      this.router.navigateByUrl('/users').then(() => {
+        window.location.reload();
+      });
+      localStorage.setItem('user', JSON.stringify(this.usuario));
+    },
+      error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Usuario incorrecto',
+          text: 'Revise sus credenciales de acceso: ' + error['statusText'],
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
+    );
   }
 
 }

@@ -21,6 +21,9 @@
     "@angular/platform-browser": "~9.0.0",
     "@angular/platform-browser-dynamic": "~9.0.0",
     "@angular/router": "~9.0.0",
+    "@types/bcrypt": "^3.0.0",
+    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "rxjs": "~6.5.4",
     "sweetalert2": "^9.17.0",
     "tslib": "^1.10.0",
@@ -46,5 +49,17 @@
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",
     "typescript": "~3.7.5"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false,
+    "crypto": false,
+    "stream": false,
+    "http": false,
+    "tls": false,
+    "zlib": false,
+    "https": false,
+    "net": false
   }
 }

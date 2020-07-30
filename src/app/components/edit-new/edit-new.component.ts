@@ -9,7 +9,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Persons } from 'src/app/models/persons';
 
-
 @Component({
   selector: 'app-edit-new',
   templateUrl: './edit-new.component.html',
@@ -37,51 +36,16 @@ export class EditNewComponent implements OnInit {
 
   constructor(private _formBuilder: FormBuilder, private personService: PersonService, private route: ActivatedRoute, private router: Router) {
     this.persona = new Persons();
+    this.persona.direccion = new Direccion('', '', '', '', '');
     this.tempPaciente = new Paciente();
     this.tempProfesional = new Profesional();
     this.aseguradoras = [];
     this.isEdit = false;
-    this.persona.direccion = { calle: '', puerta: '', numero: '', codigoPostal: '', ciudad: '' };
+    this.idPersona = "";
   }
 
   ngOnInit() {
-    /**OBTENER ID QUE PASA POR PARAMETRO */
-    this.route.paramMap.subscribe((parametros) => {
-      this.idPersona = parametros['params']['user_id'];
-    });
-
-    /**BUSCAR PERSONA POR ID */
-    this.personService.getProfesionalById(this.idPersona).subscribe(pr => {
-      this.isEdit = true;
-      if (pr !== null) {
-        this.persona = pr as Persons;
-        this.tempProfesional = pr;
-        this.tipo = 'profesional';
-        if (pr.tipoProfesional) {
-          this.firstFormGroup.get('tipoProfesional').setValue(pr.tipoProfesional.toString());
-        }
-        if (pr.genero) {
-          this.firstFormGroup.get('genero').setValue(pr.genero.toString());
-        }
-      } else {
-        this.personService.getPacienteById(this.idPersona).subscribe(pa => {
-          if (pa !== null) {
-            this.persona = pa as Persons;
-            this.tempPaciente = pa;
-            this.aseguradoras = pa.listadoAseguradoras;
-            this.dataSource = this.aseguradoras;
-            if (pa.tipoSeguro) {
-              this.thirdFormGroup.get('tipoSeguro').setValue(pa.tipoSeguro.toString());
-            }
-            if (pa.genero != null) {
-              this.firstFormGroup.get('genero').setValue(pa.genero.toString());
-            }
-          }
-        });
-      }
-
-      this.changeTipoPersona();
-    });
+    this.getPersonById();
 
     /**VALIDACIONES DE LOS FORMULARIOS */
     this.firstFormGroup = this._formBuilder.group({
@@ -109,6 +73,53 @@ export class EditNewComponent implements OnInit {
       nombreAseguradora: [''],
       tipoSeguro: ['']
     });
+  }
+
+  recogerParametro() {
+    this.route.paramMap.subscribe((parametros) => {
+      this.idPersona = parametros['params']['user_id'];
+    });
+  }
+
+  getPersonById() {
+    /**OBTENER ID QUE PASA POR PARAMETRO */
+    this.recogerParametro();
+
+    /**BUSCAR PERSONA POR ID */
+    if (this.idPersona !== null && !this.idPersona.startsWith(" ")) {
+      this.personService.getProfesionalById(this.idPersona).subscribe(pr => {
+        if (pr !== null) {
+          this.isEdit = true;
+          this.persona = pr as Persons;
+          this.tempProfesional = pr;
+          this.tipo = 'profesional';
+          if (pr.tipoProfesional) {
+            this.firstFormGroup.get('tipoProfesional').setValue(pr.tipoProfesional.toString());
+          }
+          if (pr.genero) {
+            this.firstFormGroup.get('genero').setValue(pr.genero.toString());
+          }
+        } else {
+          this.personService.getPacienteById(this.idPersona).subscribe(pa => {
+            if (pa !== null) {
+              this.isEdit = true;
+              this.persona = pa as Persons;
+              this.tempPaciente = pa;
+              this.aseguradoras = pa.listadoAseguradoras;
+              this.dataSource = this.aseguradoras;
+              if (pa.tipoSeguro) {
+                this.thirdFormGroup.get('tipoSeguro').setValue(pa.tipoSeguro.toString());
+              }
+              if (pa.genero != null) {
+                this.firstFormGroup.get('genero').setValue(pa.genero.toString());
+              }
+            }
+          });
+        }
+
+        this.changeTipoPersona();
+      });
+    }
   }
 
   addPerson(person, direccion) {
@@ -208,7 +219,6 @@ export class EditNewComponent implements OnInit {
 
   updatePerson(formularioDatosPersonales) {
     if (formularioDatosPersonales.valid) {
-      console.log(formularioDatosPersonales.value.genero);
       this.persona.genero = formularioDatosPersonales.value.genero;
       if (this.tipo === 'profesional') {
         (this.persona as Profesional).tipoProfesional = parseInt(formularioDatosPersonales.value.tipoProfesional, 0);
@@ -218,6 +228,12 @@ export class EditNewComponent implements OnInit {
         delete this.persona['NHC'];
 
         this.personService.updateProfesional(this.idPersona, this.persona as Profesional).subscribe(pr => {
+          if (pr['updProf'] === null) {
+            this.personService.createProfesional(this.persona as Profesional).subscribe(r => {
+              this.personService.deletePaciente(this.idPersona).subscribe(re => {
+              });
+            });
+          }
           Swal.fire({
             icon: 'success',
             title: 'El usuario ha sido actualizado correctamente',
@@ -235,8 +251,14 @@ export class EditNewComponent implements OnInit {
         delete this.persona['tipoProfesional'];
         delete this.persona['numColegiado'];
 
-        console.log(this.persona, this.idPersona);
         this.personService.updatePaciente(this.idPersona, this.persona as Paciente).subscribe(pa => {
+          if (pa['updPac'] === null) {
+            this.personService.createPaciente(this.persona as Paciente).subscribe(r => {
+              this.personService.deleteProfesional(this.idPersona).subscribe(r => {
+              })
+            })
+          }
+
           Swal.fire({
             icon: 'success',
             title: 'El usuario ha sido actualizado correctamente',
