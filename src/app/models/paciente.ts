@@ -5,9 +5,8 @@ export enum TipoSeguro {
     SALUD = 1,
     FAMILIAR,
     DENTAL,
-    TRABAJO,
-    ESTUDIANTE,
-    VIAJE
+    VIAJE,
+    ESTUDIANTE
 }
 
 export class Paciente extends Persons {
