@@ -44,11 +44,20 @@ export class UsersComponent implements OnInit {
       this.service.getProfesionales().subscribe(r => {
         this.profesionales = r['profs'] as Profesional[];
 
-        this.dataSource.data = this.personas.concat(this.profesionales, this.pacientes);
-
+        this.dataSource.data = this.personas.concat(this.profesionales, this.pacientes).sort((a, b) => {
+          if (a.createdAt.valueOf() < b.createdAt.valueOf()) {
+            return -1;
+          }
+          if (a.createdAt.valueOf() > b.createdAt.valueOf()) {
+            return 1;
+          }
+          return 0;
+        }
+        );
       });
     });
   }
+
 
   deletePerson(persona) {
     Swal.fire({

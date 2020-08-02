@@ -9,4 +9,5 @@ export class Persons {
     fechaNacimiento: Date;
     NIF: string;
     direccion: Direccion;
+    createdAt: Date;
 }
