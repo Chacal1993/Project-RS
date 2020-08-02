@@ -16,11 +16,16 @@ body {
 
 @media (max-width: 411px) {
     .bg-body {
-        background: url(assets/img/home2_mobile.jpeg) no-repeat;
+        background: url(assets/img/home2_mobile.jpg) no-repeat;
+        background-size: cover;
     }
-    body {
+    .bg-fixed {
         width: fit-content;
+        position: fixed !important;
     }
+    /*     body {
+        width: fit-content;
+    } */
 }
 .text-center {
     text-align: center;
@@ -37,4 +42,7 @@ app-detail .mat-input-element:disabled {
 
 input:-internal-autofill-selected {
     background-color: transparent !important;
+}
+body.mat-typography {
+    width: 100% !important;
 }

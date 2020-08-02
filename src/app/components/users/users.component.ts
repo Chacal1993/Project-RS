@@ -29,6 +29,8 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    document.body.className = "mat-typography bg-fixed";
+
     this.actualizarDatosTabla();
     this.dataSource.paginator = this.paginator;
     this.dataSource.paginator._intl.itemsPerPageLabel = "Elementos por página";
@@ -123,5 +125,9 @@ export class UsersComponent implements OnInit {
         });
       }
     });
+  }
+
+  ngOnDestroy() {
+    document.body.className = "mat-typography";
   }
 }

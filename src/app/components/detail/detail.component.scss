@@ -23,6 +23,14 @@ form,
     }
 }
 
+@media (max-width: 411px) {
+    form > div,
+    .contenedora > div,
+    .container-aseguradora > div {
+        flex-direction: column;
+    }
+}
+
 .contenedora :nth-child(1) :nth-child(1) {
     flex: 3;
     margin-right: 1%;
