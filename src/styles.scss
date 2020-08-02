@@ -14,7 +14,7 @@ body {
     background-size: cover;
 }
 
-@media (max-width: 411px) {
+@media (max-width: 450px) {
     .bg-body {
         background: url(assets/img/home2_mobile.jpg) no-repeat;
         background-size: cover;
@@ -22,6 +22,11 @@ body {
     .bg-fixed {
         width: fit-content;
         position: fixed !important;
+    }
+    .mat-tab-group.mat-tab-group-dynamic-height .mat-tab-body.mat-tab-body-active {
+        /* overflow-y: hidden; */
+        overflow: auto;
+        margin-bottom: 20%;
     }
     /*     body {
         width: fit-content;
