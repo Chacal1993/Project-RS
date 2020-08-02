@@ -114,12 +114,13 @@ export class UsersComponent implements OnInit {
           if (p.tipoProfesional === TipoProfesional.MEDICO) {
             this.service.deleteMedicos().subscribe(r => {
               this.actualizarDatosTabla();
-              Swal.fire({
-                icon: 'success',
-                title: 'Los médicos se han eliminado de forma satisfactoria!',
-                showConfirmButton: false,
-                timer: 1500
-              });
+
+            });
+            Swal.fire({
+              icon: 'success',
+              title: 'Los médicos se han eliminado de forma satisfactoria!',
+              showConfirmButton: false,
+              timer: 1500
             });
           }
         });
