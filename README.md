@@ -6,11 +6,14 @@ _Estas instrucciones te permitirán obtener una copia del proyecto en funcionami
 <ol>
   <li>Descargue una copia del proyecto en su ordenador o clone el repositorio en un ruta del mismo.</li>
   <li>Ejecutar npm install para descargar las depedencias de node</li>
-  <li>Adicionalmente el proyecto cuenta con dependencia de un servidor externo para el almacenamiento de los datos que podrá descargar en la siguiente ruta siguiendo las instrucciones que ahí se indican</li>
+  <li>Adicionalmente el proyecto cuenta con dependencia de un servidor externo para el almacenamiento de los datos que podrá descargar en la siguiente ruta siguiendo las instrucciones que ahí se indican https://github.com/Chacal1993/Project-rs-back.git</li>
   <li>Para visualizarlo en el navegador por medio del comando ng serve podrá consumir la aplicacción</li>
   <li>La ruta para consumir el proyecto son http://localhost:4200/</li>
 </ol>
-
+### Configuración
+_También si se desea visualizar los datos en MongoDb Atlas las variables de entorno par dar acceso a mi base de datos son:
+USER=admin
+PASS=9Qw2huizuGjqsDH
 ### Accediendo a la aplicación
 _Una vez configurado de forma correcta podrá visualizar la página de acceso al mismo donde deberás proporcionar las credenciales correctas para poder acceder_
 <img src="https://github.com/Chacal1993/Project-RS/blob/master/Readme/login.PNG">
